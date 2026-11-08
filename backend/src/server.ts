@@ -22,28 +22,39 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Health Check
-app.get('/api/health', (_req, res) => {
+// Health Check (يدعم المسارين /api/health و /health)
+const healthHandler = (_req: express.Request, res: express.Response) => {
   res.json({
     success: true,
     status: 'ok',
     app: 'Noota API (نوتة رقمية)',
     timestamp: new Date().toISOString()
   });
-});
+};
+app.get('/api/health', healthHandler);
+app.get('/health', healthHandler);
 
-// تفعيل مسارات الـ API
+// تفعيل مسارات الـ API (دعم المسارات ببادئة /api وبدونها لضمان التوافق التام)
 app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes);
+
 app.use('/api/customers', customerRoutes);
+app.use('/customers', customerRoutes);
+
 app.use('/api/transactions', transactionRoutes);
+app.use('/transactions', transactionRoutes);
+
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/dashboard', dashboardRoutes);
 
 // معالج الأخطاء العام
 app.use(errorHandler);
 
-// تشغيل السيرفر
-app.listen(config.port, () => {
-  console.log(`🚀 سيرفر نوتة رقمية يعمل بنجاح على المنفذ http://localhost:${config.port}`);
-});
+// تشغيل السيرفر محلياً أو في بيئات السيرفر المستمر (Render / Docker)
+if (!process.env.VERCEL) {
+  app.listen(config.port, () => {
+    console.log(`🚀 سيرفر نوتة رقمية يعمل بنجاح على المنفذ http://localhost:${config.port}`);
+  });
+}
 
 export default app;
