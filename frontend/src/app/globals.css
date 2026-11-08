@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+:root {
+  --background: #080C14;
+  --foreground: #F8FAFC;
+  --surface-card: #0F172A;
+  --surface-overlay: #1E293B;
+  --surface-input: #0A0F1D;
+  --brand-emerald: #10B981;
+  --brand-teal: #14B8A6;
+  --color-debt: #EF4444;
+  --color-payment: #10B981;
+  --brand-whatsapp: #25D366;
+}
+
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable; /* منع قفز الصفحة أثناء ظهور أو اختفاء شريط التمرير */
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-cairo), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  direction: rtl;
+  text-align: right;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background: rgba(15, 23, 42, 0.85);
+  border-color: rgba(16, 185, 129, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.glass-modal {
+  background: rgba(11, 16, 28, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
+}
+
+.glass-input {
+  background-color: rgba(10, 15, 29, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #F8FAFC;
+  transition: all 0.2s ease;
+}
+
+.glass-input:focus {
+  border-color: #10B981;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080C14;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1E293B;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #10B981;
+}
+
+/* Fix browser autofill from breaking dark mode */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #0A0F1D inset !important;
+  -webkit-text-fill-color: #F8FAFC !important;
+  transition: background-color 50000s ease-in-out 0s;
+}
+
+/* Shimmer Wave Effect for Skeleton Loaders */
+@keyframes shimmerWave {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.shimmer-wave {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-wave::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.05) 20%,
+    rgba(255, 255, 255, 0.12) 60%,
+    rgba(255, 255, 255, 0)
+  );
+  animation: shimmerWave 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  content: "";
+}
+
+.tabular-numbers {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------- */
+/* أنماط مخصصة للطباعة الفورية (طابعات الفواتير والكاشير 80mm و A4) */
+/* ------------------------------------------------------------- */
+@media print {
+  @page {
+    margin: 10mm;
+    size: auto;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* إخفاء الأزرار والأجزاء غير الطباعية */
+  header,
+  footer,
+  nav,
+  button,
+  .no-print,
+  .fixed,
+  [role="dialog"] > div:first-child {
+    display: none !important;
+  }
+
+  /* تنسيق محتوى الكشف ليكون حاداً وموفراً للحبر */
+  .glass-card,
+  .glass-panel,
+  .glass-modal {
+    background: #ffffff !important;
+    border: 1px solid #000000 !important;
+    box-shadow: none !important;
+    color: #000000 !important;
+    backdrop-filter: none !important;
+  }
+
+  * {
+    color: #000000 !important;
+    text-shadow: none !important;
+  }
+}
