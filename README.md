@@ -24,45 +24,5 @@
 
 ---
 
-## 🔒 منظومة الأمان وبوابة الإدارة المشفرة (Security System)
-
-1. **إخفاء الإدارة عن العامة:** لا يوجد أي رابط أو ذكر لمالك المنصة في الواجهة العامة للعملاء.
-2. **فخ مسار `/admin`:** أي محاولة لفتح الرابط `http://localhost:3000/admin` ترجع خطأ **404 Not Found** صريح.
-3. **البوابة السرية (The Vault Gate):**
-   * **الرابط السري:** `http://localhost:3000/vault-gate`
-   * **المفتاح السري الرئيسي (Master Key):** `noota-gate-master-2026`
-   * **الدخول المباشر بالمفتاح:**  
-     `http://localhost:3000/vault-gate?key=noota-gate-master-2026`
-
----
-
-## 🚀 تشغيل المشروع محلياً (Local Development)
-
-### 1. تشغيل السيرفر الخلفي (Backend)
-```bash
-cd backend
-npm install
-npm run dev
-# السيرفر سيعمل على: http://localhost:5000
-```
-
-### 2. تشغيل الواجهة الأمامية (Frontend)
-```bash
-cd frontend
-npm install
-npm run dev
-# التطبيق سيعمل على: http://localhost:3000
-```
-
----
-
-## 📦 خطة النشر التجاري السحابي (Production Deployment)
-
-1. **قاعدة البيانات:** جاهزة وتعمل على **Supabase** السحابية.
-2. **الـ Backend:** يمكن رفعه مجاناً أو بـ 5$ شهرياً على **Render** أو **Railway**.
-3. **الـ Frontend:** رفعه بضغطة زر على **Vercel** مع ربط الدومين الخاص بك (مثل: `noota.app` أو `noota.me`).
-
----
-
 &copy; 2026 منصة نوتة رقمية (Noota). جميع الحقوق محفوظة.
 
